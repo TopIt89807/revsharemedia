@@ -1,0 +1,5 @@
+{
+    "name": "EnergeticSuccess",
+    "dbHost": "mongodb://root:root@ds243768.mlab.com:43768/revsharemedia",
+    "expiresIn": "24h"
+}
