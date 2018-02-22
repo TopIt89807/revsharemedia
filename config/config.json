@@ -1,5 +1,6 @@
 {
     "name": "EnergeticSuccess",
     "dbHost": "mongodb://root:root@ds243768.mlab.com:43768/revsharemedia",
+    "secret": "RevShareMedia_Credential",
     "expiresIn": "24h"
 }

@@ -26,3 +26,27 @@ exports.signup = (req, res) => {
         res.status(500).json({ err });
     });
 }
+
+exports.login = (req, res) => {
+    const {email, password} = req.body;
+
+    users.find({email: email})
+    .then((result) => {
+        if(result.length == 0) {
+            res.status(404).json({ message: 'User not found!'});
+        } else {
+            return result[0];
+        }
+    })
+    .then((user) => {
+        if(bcrypt.compareSync(password, user.hashed_password)) {
+            const token = jwt.sign(user.toJSON(), config.secret, {expiresIn: config.expiresIn});
+            res.status(200).json({message: 'Login successfully!', token: token});
+        } else {
+            res.status(401).json({message: 'Invalid credential!'});
+        }
+    })
+    .catch((err) => {
+        res.status(500).json({ err });
+    });
+}

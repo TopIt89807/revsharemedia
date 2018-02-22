@@ -4,13 +4,18 @@ const users = require('../../controllers/users');
 var validate = require('express-validation');
 var Joi = require('joi');
 
-router.post('/signup', validate(
-    {
-        body: {
-            email: Joi.string().email().required(),
-            password: Joi.string().required()
-        }
+router.post('/signup', validate({
+    body: {
+        email: Joi.string().email().required(),
+        password: Joi.string().required()
     }
-), users.signup);
+}), users.signup);
+
+router.post('/login', validate({
+    body: {
+        email: Joi.string().email().required(),
+        password: Joi.string().required()
+    }
+}), users.login);
 
 module.exports = router;
