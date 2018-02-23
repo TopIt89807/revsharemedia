@@ -1,6 +1,6 @@
 {
     "name": "EnergeticSuccess",
-    "dbHost": "mongodb://root:root@ds243768.mlab.com:43768/revsharemedia",
+    "dbHost": "mongodb://adb01dc21f4d:Cr177us3r@localhost:27017/crm",
     "secret": "RevShareMedia_Credential",
     "expiresIn": "24h"
 }
