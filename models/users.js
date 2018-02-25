@@ -5,17 +5,36 @@ const UsersSchema = new Schema({
     email: {
         type: String,
         isRequired: true,
-        unique: true
+        unique: true,
     },
-    hashed_password: {
+    password: {
         type: String,
-        isRequired: true
+        isRequired: true,
     },
-    user_type: {
+    employeeType: {
         type: Number,
         isRequired: true,
-        default: 1
     },
+    state: {
+        type: Boolean,
+        isRequired: true,
+    },
+    lastLogin: {
+        type: Date,
+        Default: Date.now
+    },
+    lastIP: {
+        type: String,
+    },
+    dateCreated: {
+        type: Date,
+        default: Date.now,
+        isRequired: true,
+    },
+    reportsTo: {
+        type: Schema.Types.ObjectId,
+        ref: 'users',
+    }
 });
 
 module.exports = mongoose.model('users', UsersSchema);
