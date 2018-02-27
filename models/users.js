@@ -11,11 +11,11 @@ const UsersSchema = new Schema({
         type: String,
         isRequired: true,
     },
-    employeeType: {
+    employeeType: { //1: Admin, 2: Manager, 3: Sales, 4:Support
         type: Number,
         isRequired: true,
     },
-    state: {
+    state: { //true: enabled, false:disabled
         type: Boolean,
         isRequired: true,
     },
@@ -34,6 +34,10 @@ const UsersSchema = new Schema({
     reportsTo: {
         type: Schema.Types.ObjectId,
         ref: 'users',
+        isRequired: true,
+    },
+    removed: {
+        type: Boolean
     }
 });
 

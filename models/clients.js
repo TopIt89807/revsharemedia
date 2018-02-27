@@ -19,20 +19,37 @@ const ClientsSchema = new Schema({
         isRequired: true,
         unique: true,
     },
-    streetAddress: {
+    streetAddress1: {
         type: String
+    },
+    streetAddress2: {
+        type: String,
     },
     city: {
-        type: String
+        type: String,
     },
     state: {
-        type: String
+        type: String,
     },
     zip: {
-        type: String
+        type: String,
     },
     country: {
-        type: String
+        type: String,
+    },
+    dateCreated: {
+        type: Date,
+        default: Date.now,
+    },
+    lastUpdated: {
+        type: Date,
+        default: Date.now,
+    },
+    tags: [{
+        type: String,
+    }],
+    source: {
+        type: String,
     },
     assignedTo: {
         type: Schema.Types.ObjectId,
