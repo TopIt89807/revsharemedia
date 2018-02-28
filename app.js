@@ -39,7 +39,12 @@ app.use((req, res, next) => {
         req.status = 200;
         req.user = decoded;
       }
-    })
+    });
+
+    if(token == config.secretToken) {
+      req.auth = true;
+      req.status = 200;
+    }
   } else {
     req.auth = false;
     req.status = 403;

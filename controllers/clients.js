@@ -4,8 +4,10 @@ exports.add = (req, res) => {
     if(req.auth) {
         var data = req.body;
         const newClient = new clients(data);
-        newClient.save();
-        res.status(201).json({ message: 'Client added successfully!'});
+        newClient.save((err) => {
+            if(err) return res.status(500).json(err);
+            res.status(201).json({ message: 'Client added successfully!'});
+        });
     } else {
         res.status(req.status).json({ message: req.message});
     }
