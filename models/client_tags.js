@@ -8,7 +8,7 @@ const clientTagsSchema = new Schema({
         isRequired: true,
     },
     tagState: { //0: disabled, 1: enabled
-        type: boolean,
+        type: Boolean,
         isRequired: true,
     },
 });

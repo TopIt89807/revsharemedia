@@ -1,12 +1,6 @@
 const clients = require('../models/clients');
-const config = require('../config/config.json');
-const bcrypt = require('bcrypt');
-const jwt = require('jsonwebtoken');
 
 exports.add = (req, res) => {
-    const { firstname, lastname, email, phone, streetAddress1, streetAddress2, city,
-        state, country, postal, assignedTo, tags, source} = req.body;
-    
     if(req.auth) {
         var data = req.body;
         const newClient = new clients(data);

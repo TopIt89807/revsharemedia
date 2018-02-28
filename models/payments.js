@@ -33,10 +33,10 @@ const PaymentsSchema = new Schema({
     parentTransactionID: {
         type: String,
     },
-    // userID: {
-    //     type: Schema.Types.ObjectId,
-    //     ref: 'users',
-    // },
+    userID: {
+        type: Schema.Types.ObjectId,
+        ref: 'users',
+    },
     // clientID: {
     //     type: Schema.Types.ObjectId,
     //     ref: 'clients',
