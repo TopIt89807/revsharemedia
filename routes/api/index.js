@@ -1,10 +1,10 @@
 const express = require('express');
 const router = express.Router();
 const users = require('./users');
-const client = require('./client');
+const clients = require('./clients');
 
 router.use('/users', users);
-router.use('/client', client);
+router.use('/clients', clients);
 
 /* GET home page. */
 router.get('/', function(req, res, next) {

@@ -12,12 +12,12 @@ const ClientsSchema = new Schema({
     email: {
         type: String,
         isRequired: true,
-        unique: true,
+        // unique: true,
     },
     phone: {
         type: String,
         isRequired: true,
-        unique: true,
+        // unique: true,
     },
     streetAddress1: {
         type: String
@@ -31,7 +31,7 @@ const ClientsSchema = new Schema({
     state: {
         type: String,
     },
-    zip: {
+    postal: {
         type: String,
     },
     country: {
@@ -54,6 +54,9 @@ const ClientsSchema = new Schema({
     assignedTo: {
         type: Schema.Types.ObjectId,
         ref: 'users',
+    },
+    removed: {
+        type: Boolean
     }
 });
 

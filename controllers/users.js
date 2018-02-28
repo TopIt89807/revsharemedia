@@ -41,8 +41,14 @@ exports.login = (req, res) => {
         }
     })
     .then((user) => {
+        if(user.removed) {
+            res.status(403).json({ message: 'User has been removed!'});
+            return;            
+        }
         if(bcrypt.compareSync(password, user.password)) {
             const token = jwt.sign(user.toJSON(), config.secret, {expiresIn: config.expiresIn});
+            user.lastLogin = Date.now();
+            user.save();
             res.status(200).json({message: 'Login successfully!', token: token});
         } else {
             res.status(401).json({message: 'Invalid credential!'});
@@ -59,8 +65,12 @@ exports.update = (req, res) => {
 
         users.findById(req.user._id, function(err, obj) {
             if(err) {
-                res.status(400).json({ message: 'User not found!' });
+                res.status(404).json({ message: 'User not found!' });
             } else {
+                if(obj.removed) {
+                    res.status(403).json({ message: 'User has been removed!'});
+                    return;            
+                }
                 Object.assign(obj, data);
                 obj.save();
                 res.status(201).json({ message: 'User updated successfully!'});
@@ -78,8 +88,12 @@ exports.updatePassword = (req, res) => {
 
         users.findById(req.user._id, function(err, obj) {
             if(err) {
-                res.status(400).json({ message: 'User not found!' });
+                res.status(404).json({ message: 'User not found!' });
             } else {
+                if(obj.removed) {
+                    res.status(403).json({ message: 'User has been removed!'});
+                    return;            
+                }
                 if(bcrypt.compareSync(originPassword, obj.password)) {
                     if(password) password = makeHash(password);
                     Object.assign(obj, {password});
@@ -100,10 +114,10 @@ exports.remove = (req, res) => {
     if(req.auth) {
         users.findById(req.user._id, function(err, obj) {
             if(err) {
-                res.status(400).json({ message: 'User not found!' });
+                res.status(404).json({ message: 'User not found!' });
             } else {
                 if(obj.removed) {
-                    res.status(400).json({ message: 'User not found!'});
+                    res.status(403).json({ message: 'User already has been removed!'});
                 } else {
                     obj.removed = true;
                     obj.save();
