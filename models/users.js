@@ -38,7 +38,10 @@ const UsersSchema = new Schema({
     },
     removed: {
         type: Boolean
-    }
+    },
+    allowFrom: [{
+        type: String,
+    }]
 });
 
 module.exports = mongoose.model('users', UsersSchema);

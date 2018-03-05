@@ -2,11 +2,17 @@ const users = require('../models/users');
 const config = require('../config/config.json');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
+const pubilcIp = require('public-ip');
 
 makeHash = (password) => {
     const salt = bcrypt.genSaltSync();
     const hash = bcrypt.hashSync(password, salt);
     return hash;
+}
+trackIP = (ip, iplist) => {
+    if(!iplist || iplist.length == 0) return true;
+    if(iplist.indexOf(ip) == -1) return false;
+    return true;
 }
 
 exports.signup = (req, res) => {
@@ -46,10 +52,16 @@ exports.login = (req, res) => {
             return;            
         }
         if(bcrypt.compareSync(password, user.password)) {
-            const token = jwt.sign(user.toJSON(), config.secret, {expiresIn: config.expiresIn});
-            user.lastLogin = Date.now();
-            user.save();
-            res.status(200).json({message: 'Login successfully!', token: token});
+            pubilcIp.v4().then(ip => {
+                if(trackIP(ip, user.allowFrom)) {
+                    const token = jwt.sign(user.toJSON(), config.secret, {expiresIn: config.expiresIn});
+                    user.lastLogin = Date.now();
+                    user.save();
+                    res.status(200).json({message: 'Login successfully!', token: token});
+                } else {
+                    res.status(403).json({message: 'Inaccessible IP address!'});
+                }
+            });
         } else {
             res.status(401).json({message: 'Invalid credential!'});
         }
